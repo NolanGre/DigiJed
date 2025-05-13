@@ -1,0 +1,54 @@
+### Отримати всі замовлення
+GET http://localhost:8080/orders
+Accept: application/json
+
+### Отримати замовлення за ID
+GET http://localhost:8080/orders/1
+Accept: application/json
+
+### Створити нове замовлення
+POST http://localhost:8080/orders
+Content-Type: application/json
+
+{
+  "customerName": "Іван Іванов",
+  "date": "2025-05-08T10:59:15",
+  "status": "PENDING"
+}
+
+### Оновити статус замовлення
+PUT http://localhost:8080/orders/1/status
+Content-Type: text/plain
+
+COMPLETED
+
+### Отримати елементи замовлення за ID замовлення
+GET http://localhost:8080/order-items/by-order/1
+Accept: application/json
+
+### Додати елемент у замовлення
+POST http://localhost:8080/order-items
+
+Content-Type: application/json
+{
+  "productId": 1,
+  "orderId": 1,
+  "quantity": 2
+}
+
+### Отримати всі продукти
+GET http://localhost:8080/products
+Accept: application/json
+
+### Отримати продукт за ID
+GET http://localhost:8080/products/1
+Accept: application/json
+
+### Створити новий продукт
+POST http://localhost:8080/products
+
+Content-Type: application/json
+{
+  "name": "Продукт 1",
+  "price": 100.0
+}
