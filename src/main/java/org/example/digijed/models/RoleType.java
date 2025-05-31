@@ -1,6 +1,6 @@
 package org.example.digijed.models;
 
-public enum UserRole {
+public enum RoleType {
     USER,
     ADMIN
 }

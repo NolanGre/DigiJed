@@ -11,7 +11,7 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -21,10 +21,9 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${GOOGLE_CLIENT_ID:169572712836-0iniu2dh6p320qsj4ac9pjmoi0gflrip.apps.googleusercontent.com}
+            client-secret: ${GOOGLE_CLIENT_SECRET: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}
             scope:
-              - openid
               - email
               - profile
             client-name: Google
@@ -39,3 +38,6 @@ app:
   jwt:
     secret: ${JWT_SECRET:f8K97xIjL8wzQ6KpM9DcJx8u5V3Kw0LV0j9yxP9oeWk=}
     expiration-ms: 3600000  #1 hour
+
+logging:
+  config: classpath:logback-spring.xml

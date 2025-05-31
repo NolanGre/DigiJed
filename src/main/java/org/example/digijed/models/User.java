@@ -32,11 +32,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "USER_ROLE", nullable = false)
-    private UserRole role;
+    private RoleType role;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "AUTH_PROVIDER", nullable = false)
     private AuthProvider authProvider;
+
+    private String providerId;
 
     private Boolean isEnabled = true;
 

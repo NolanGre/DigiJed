@@ -7,12 +7,14 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.SecretKey;
 import java.security.SignatureException;
 import java.util.Date;
 import java.util.function.Function;
 
+@Slf4j
 @Service
 public class JwtService {
 
@@ -23,6 +25,7 @@ public class JwtService {
     private Long jwtLifetime;
 
     public String generateJwtToken(UserDetails userDetails) {
+        log.debug("Generating JWT token for user: {}", userDetails.getUsername());
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
@@ -32,6 +35,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) throws SignatureException {
+        log.debug("Validating JWT token for user: {}", userDetails.getUsername());
         final String login = extractLogin(token);
         return login.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
@@ -41,7 +45,11 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) throws SignatureException {
-        return extractExpiration(token).before(new Date());
+        boolean expired = extractExpiration(token).before(new Date());
+        if (expired) {
+            log.warn("Token has expired");
+        }
+        return expired;
     }
 
     private Date extractExpiration(String token) throws SignatureException {
@@ -53,12 +61,18 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaimsFromToken(String token) throws SignatureException {
-        return Jwts.parser()
-                .verifyWith(getSignInKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+    private Claims extractAllClaimsFromToken(String token) {
+        log.debug("Extracting all claims from JWT token");
+        try {
+            return Jwts.parser()
+                    .verifyWith(getSignInKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (Exception e) {
+            log.error("Error extracting claims from token: {}", e.getMessage());
+            throw e;
+        }
     }
 
     private SecretKey getSignInKey() {

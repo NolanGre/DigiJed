@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.digijed.services.security.CustomUserDetailsService;
 import org.example.digijed.services.security.JwtService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -14,10 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.security.SignatureException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -32,6 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
+        log.debug("Processing JWT token for request: {}", request.getRequestURI());
         if (isUserAuthenticated()) {
             filterChain.doFilter(request, response);
             return;
@@ -60,7 +64,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         } catch (UsernameNotFoundException ex) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
             return;
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            log.error("JWT token validation failed: {}", e.getMessage());
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
             return;
         }

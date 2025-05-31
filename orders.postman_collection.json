@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "Order Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "12345678-abcd-efgh-ijkl-1234567890ab"
+  },
+  "item": [
+    {
+      "name": "Отримати всі замовлення",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/orders", "host": ["localhost"], "port": "8080", "path": ["orders"] }
+      }
+    },
+    {
+      "name": "Отримати замовлення за ID",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/orders/1", "host": ["localhost"], "port": "8080", "path": ["orders", "1"] }
+      }
+    },
+    {
+      "name": "Створити нове замовлення",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerName\": \"Іван Іванов\",\n  \"date\": \"2025-05-08T10:59:15\",\n  \"status\": \"PENDING\"\n}"
+        },
+        "url": { "raw": "http://localhost:8080/orders", "host": ["localhost"], "port": "8080", "path": ["orders"] }
+      }
+    },
+    {
+      "name": "Оновити статус замовлення",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "text/plain" }],
+        "body": { "mode": "raw", "raw": "COMPLETED" },
+        "url": { "raw": "http://localhost:8080/orders/1/status", "host": ["localhost"], "port": "8080", "path": ["orders", "1", "status"] }
+      }
+    },
+    {
+      "name": "Отримати елементи замовлення",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8080/order-items/by-order/1",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["order-items", "by-order", "1"]
+        }
+      }
+    },
+    {
+      "name": "Додати елемент у замовлення",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"productId\": 1,\n  \"orderId\": 1,\n  \"quantity\": 2\n}"
+        },
+        "url": { "raw": "http://localhost:8080/order-items", "host": ["localhost"], "port": "8080", "path": ["order-items"] }
+      }
+    },
+    {
+      "name": "Отримати всі продукти",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/products", "host": ["localhost"], "port": "8080", "path": ["products"] }
+      }
+    },
+    {
+      "name": "Отримати продукт за ID",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/products/1", "host": ["localhost"], "port": "8080", "path": ["products", "1"] }
+      }
+    },
+    {
+      "name": "Створити новий продукт",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Продукт 1\",\n  \"price\": 100.0\n}"
+        },
+        "url": { "raw": "http://localhost:8080/products", "host": ["localhost"], "port": "8080", "path": ["products"] }
+      }
+    }
+  ]
+}
