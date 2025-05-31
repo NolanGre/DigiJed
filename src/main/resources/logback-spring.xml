@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <appender name="LOGSTASH_TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <!--<appender name="LOGSTASH_TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${LOGSTASH_HOST:-localhost}:${LOGSTASH_PORT:-5000}</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <includeContext>true</includeContext>
@@ -29,9 +29,9 @@
         <discardingThreshold>0</discardingThreshold>
         <includeCallerData>false</includeCallerData>
     </appender>
-
+-->
     <root level="INFO">
-        <appender-ref ref="ASYNC_LOGSTASH"/>
+        <!--<appender-ref ref="ASYNC_LOGSTASH"/>-->
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
